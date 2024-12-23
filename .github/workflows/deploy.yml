@@ -1,39 +1,39 @@
 name: Deploy to GitHub Pages
 
 on:
-   push:
-      branches:
-         - main  # Trigger deploy on push to the main branch (you can change it to "master" if you're using that)
+  push:
+    branches:
+      - main  # Trigger deploy on push to the main branch (you can change it to "master" if you're using that)
 
 jobs:
-   deploy:
-      runs-on: ubuntu-latest  # Run on the latest Ubuntu runner
+  deploy:
+    runs-on: ubuntu-latest  # Run on the latest Ubuntu runner
 
-      steps:
-         # Checkout the repository
-         - name: Checkout code
-           uses: actions/checkout@v3
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-         # Set up Node.js
-         - name: Set up Node.js
-           uses: actions/setup-node@v3
-           with:
-              node-version: '16'  # Choose the Node.js version that matches your project
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # Choose the Node.js version that matches your project
 
-         # Install dependencies
-         - name: Install dependencies
-           run: |
-              yarn install
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          yarn install
 
-         # Build the project
-         - name: Build the project
-           run: |
-              yarn build
+      # Build the project
+      - name: Build the project
+        run: |
+          yarn build
 
-         # Deploy to GitHub Pages
-         - name: Deploy to GitHub Pages
-           uses: gh-pages-action@v1.0.0  # Deploy to GitHub Pages
-           with:
-              branch: gh-pages  # The branch where the site will be deployed
-              folder: build     # The folder containing the built files
-              token: ${{ secrets.GITHUB_TOKEN }}  # Use GitHub's token for authentication
+      # Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: gh-pages-action@v1.0.0  # Deploy to GitHub Pages
+        with:
+          branch: gh-pages  # The branch where the site will be deployed
+          folder: build     # The folder containing the built files
+          token: ${{ secrets.GITHUB_TOKEN }}  # Use GitHub's token for authentication
