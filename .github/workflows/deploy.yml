@@ -6,7 +6,7 @@ on:
       - main  # Trigger deploy on push to the main branch (you can change it to "master" if you're using that)
 
 jobs:
-  deploy:
+  run:
     runs-on: ubuntu-latest  # Run on the latest Ubuntu runner
 
     steps:
@@ -22,18 +22,12 @@ jobs:
 
       # Install dependencies
       - name: Install dependencies
-        run: |
-          yarn install
+        run: yarn install
 
       # Build the project
       - name: Build the project
-        run: |
-          yarn build
+        run: yarn build
 
       # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
-        uses: gh-pages-action@v1.0.0  # Deploy to GitHub Pages
-        with:
-          branch: gh-pages  # The branch where the site will be deployed
-          folder: build     # The folder containing the built files
-          token: ${{ secrets.GITHUB_TOKEN }}  # Use GitHub's token for authentication
+        run: yarn deploy
