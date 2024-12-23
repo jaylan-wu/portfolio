@@ -6,7 +6,7 @@ on:
       - main  # Trigger deploy on push to the main branch (you can change it to "master" if you're using that)
 
 jobs:
-  run:
+  deploy:
     runs-on: ubuntu-latest  # Run on the latest Ubuntu runner
 
     steps:
@@ -29,5 +29,15 @@ jobs:
         run: yarn build
 
       # Deploy to GitHub Pages
-      - name: Deploy to GitHub Pages
-        run: yarn deploy
+      - name: Deploy to Github Pages
+        run: |
+           git config --global user.name "${user_name}"
+           git config --global user.email "${user_email}"
+           git remote set-url origin https://${github_token}@github.com/${repository}
+           npm run deploy
+        env:
+           user_name: 'github-actions[bot]'
+           user_email: 'github-actions[bot]@users.noreply.github.com'
+           github_token: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
+           repository: ${{ github.repository }}
+
